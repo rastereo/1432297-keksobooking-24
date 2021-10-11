@@ -1,3 +1,3 @@
 import './data.js';
 import './random-generator.js';
-import './create-property';
+import { createProperty } from './create-property.js';

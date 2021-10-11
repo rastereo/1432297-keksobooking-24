@@ -10,7 +10,9 @@ const randomFeatures = () => {
     const nameRandomFeature = OFFER.features[getRandomIntInclusive(0, OFFER.features.length - 1)];
     if (!containerFeatures.includes(nameRandomFeature)) {
       containerFeatures[i] = nameRandomFeature;
+      continue;
     }
+    i--;
   }
 
   return containerFeatures;
@@ -23,7 +25,9 @@ const randomPhotos = () => {
     const nameRandomPhoto = OFFER.photos[getRandomIntInclusive(0, OFFER.photos.length - 1)];
     if (!containerPhotos.includes(nameRandomPhoto)) {
       containerPhotos[i] = nameRandomPhoto;
+      continue;
     }
+    i--;
   }
 
   return containerPhotos;
@@ -48,4 +52,4 @@ const randomProperty = function () {
 
 const createProperty = Array.from({ length: PROPERTY_COUNT }, randomProperty);
 
-export {createProperty};
+export { createProperty };

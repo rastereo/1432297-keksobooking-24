@@ -1,4 +1,4 @@
-import { getRandomFloat, getRandomIntInclusive } from './random-generator';
+import { getRandomFloat, getRandomIntInclusive } from './random-generator.js';
 
 const AUTHOR = {
   avatar: (number) => {
@@ -28,4 +28,4 @@ const OFFER = {
   photos: ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'],
 };
 
-export {AUTHOR, LOCATION, OFFER};
+export { AUTHOR, LOCATION, OFFER };
