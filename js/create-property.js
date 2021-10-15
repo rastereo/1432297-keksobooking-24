@@ -36,7 +36,7 @@ const randomPhotos = () => {
 const randomProperty = function () {
   return {
     author: AUTHOR.avatar(getRandomIntInclusive(1, 10)),
-    tittle: OFFER.tittle,
+    title: OFFER.title,
     adress: `${LOCATION.lat(35.65000, 35.70000, 5)}, ${LOCATION.lng(139.70000, 139.80000, 5)}`,
     price: OFFER.price(10000, 50000),
     type: OFFER.type[getRandomIntInclusive(0, OFFER.type.length - 1)],
@@ -44,9 +44,9 @@ const randomProperty = function () {
     guests: OFFER.guests(1, 5),
     checkin: OFFER.checkin[getRandomIntInclusive(0, OFFER.checkin.length - 1)],
     checkout: OFFER.checkout[getRandomIntInclusive(0, OFFER.checkout.length - 1)],
-    features: randomFeatures(), // не могу понять, откуда в массиве появляются пустые элементы
+    features: randomFeatures(),
     description: OFFER.description,
-    photos: randomPhotos(), // не могу понять, откуда в массиве появляются пустые элементы
+    photos: randomPhotos(),
   };
 };
 
