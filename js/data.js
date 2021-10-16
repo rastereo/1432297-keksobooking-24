@@ -15,7 +15,7 @@ const LOCATION = {
 };
 
 const OFFER = {
-  tittle: 'Сдам жилплощадь в Токио',
+  title: 'Сдам жилплощадь в Токио',
   adress: `${LOCATION.lat}, ${LOCATION.lng}`,
   price: (from, to) => getRandomIntInclusive(from, to),
   type: ['palace', 'flat', 'house', 'bungalow', 'hotel'],
