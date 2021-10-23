@@ -27,7 +27,7 @@ function createPopup (property) {
     addressPopup.remove();
   }
 
-  const pricePopup = clonePopup.querySelector('.popup__text--price')
+  const pricePopup = clonePopup.querySelector('.popup__text--price');
 
   if (property.price) {
     pricePopup.textContent = `${property.price} ₽/ночь`;
