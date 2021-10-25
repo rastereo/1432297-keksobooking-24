@@ -33,11 +33,20 @@ const randomPhotos = () => {
   return containerPhotos;
 };
 
+// const createCoordinate = function (object) {
+//   return {
+//   lnt: LOCATION.lat(35.65000, 35.70000, 5),
+//   lat: LOCATION.lng(139.70000, 139.80000, 5),
+// };
+
 const randomProperty = function () {
   return {
     author: AUTHOR.avatar(getRandomIntInclusive(1, 10)),
     title: OFFER.title,
-    adress: `${LOCATION.lat(35.65000, 35.70000, 5)}, ${LOCATION.lng(139.70000, 139.80000, 5)}`,
+    adress: {
+      lat: LOCATION.lat(35.65000, 35.70000, 5),
+      lnt: LOCATION.lng(139.70000, 139.80000, 5),
+    },
     price: OFFER.price(10000, 50000),
     type: OFFER.type[getRandomIntInclusive(0, OFFER.type.length - 1)],
     rooms: OFFER.rooms(1, 10),
