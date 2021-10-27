@@ -1,6 +1,5 @@
 function createPopup (property) {
   const blankPopup = document.querySelector('#card').content;
-  const mapCanvas = document.querySelector('#map-canvas');
   const clonePopup = blankPopup.cloneNode(true);
 
   const TypeList = {
@@ -22,7 +21,7 @@ function createPopup (property) {
   const addressPopup = clonePopup.querySelector('.popup__text--address');
 
   if (property.adress) {
-    addressPopup.textContent = property.adress;
+    addressPopup.textContent = `${property.adress.lat}, ${property.adress.lnt}`;
   } else {
     addressPopup.remove();
   }
@@ -114,7 +113,7 @@ function createPopup (property) {
     photosPopup.remove();
   }
 
-  mapCanvas.appendChild(clonePopup);
+  return clonePopup;
 }
 
 export { createPopup };
