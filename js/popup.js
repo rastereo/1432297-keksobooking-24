@@ -1,6 +1,6 @@
 function createPopup (property) {
   const blankPopup = document.querySelector('#card').content;
-  const clonePopup = blankPopup.cloneNode(true);
+  const clonePopup = blankPopup.querySelector('.popup').cloneNode(true);
 
   const TypeList = {
     flat: 'Квартира',
@@ -12,72 +12,72 @@ function createPopup (property) {
 
   const titlePopup = clonePopup.querySelector('.popup__title');
 
-  if (property.title) {
-    titlePopup.textContent = property.title;
+  if (property.offer.title) {
+    titlePopup.textContent = property.offer.title;
   } else {
     titlePopup.remove();
   }
 
   const addressPopup = clonePopup.querySelector('.popup__text--address');
 
-  if (property.adress) {
-    addressPopup.textContent = `${property.adress.lat}, ${property.adress.lnt}`;
+  if (property.offer.address) {
+    addressPopup.textContent = property.offer.address;
   } else {
     addressPopup.remove();
   }
 
   const pricePopup = clonePopup.querySelector('.popup__text--price');
 
-  if (property.price) {
-    pricePopup.textContent = `${property.price} ₽/ночь`;
+  if (property.offer.price) {
+    pricePopup.textContent = `${property.offer.price} ₽/ночь`;
   } else {
     pricePopup.remove();
   }
 
   const capacity = clonePopup.querySelector('.popup__text--capacity');
 
-  if (property.rooms && property.guests) {
-    capacity.textContent = `${property.rooms} комнаты для ${property.guests} гостей`;
-  } else if (property.rooms) {
-    capacity.textContent = `${property.rooms} комнаты`;
-  } else if (property.guests){
-    capacity.textContent = `Для ${property.guests} гостей`;
+  if (property.offer.rooms && property.offer.guests) {
+    capacity.textContent = `${property.offer.rooms} комнаты для ${property.offer.guests} гостей`;
+  } else if (property.offer.rooms) {
+    capacity.textContent = `${property.offer.rooms} комнаты`;
+  } else if (property.offer.guests){
+    capacity.textContent = `Для ${property.offer.guests} гостей`;
   } else {
     capacity.remove();
   }
 
   const timePopup = clonePopup.querySelector('.popup__text--time');
 
-  if (property.checkin && property.checkout) {
-    timePopup.textContent = `Заезд после ${property.checkin}, выезд до ${property.checkout}`;
-  } else if (property.checkin) {
-    timePopup.textContent = `Заезд после ${property.checkin}`;
-  } else if (property.checkout) {
-    timePopup.textContent = `Выезд до ${property.checkout}`;
+  if (property.offer.checkin && property.offer.checkout) {
+    timePopup.textContent = `Заезд после ${property.offer.checkin}, выезд до ${property.offer.checkout}`;
+  } else if (property.offer.checkin) {
+    timePopup.textContent = `Заезд после ${property.offer.checkin}`;
+  } else if (property.offer.checkout) {
+    timePopup.textContent = `Выезд до ${property.offer.checkout}`;
   } else {
     timePopup.remove();
   }
 
   const descriptionPopup = clonePopup.querySelector('.popup__description');
 
-  if (property.description) {
-    descriptionPopup.textContent = property.description;
+  if (property.offer.description) {
+    descriptionPopup.textContent = property.offer.description;
   } else {
     descriptionPopup.remove();
   }
 
   const avatarPopup = clonePopup.querySelector('.popup__avatar');
 
-  if (property.author){
-    avatarPopup.src = property.author;
+  if (property.author.avatar){
+    avatarPopup.src = property.author.avatar;
   } else {
     avatarPopup.remove();
   }
 
   const typePopup = clonePopup.querySelector('.popup__type');
 
-  if (property.type) {
-    typePopup.textContent = TypeList[property.type];
+  if (property.offer.type) {
+    typePopup.textContent = TypeList[property.offer.type];
   } else {
     typePopup.remove();
   }
@@ -85,11 +85,11 @@ function createPopup (property) {
   const featuresPopup = clonePopup.querySelector('.popup__features');
   featuresPopup.innerHTML = '';
 
-  if (property.features) {
-    for (let i = 0; i < property.features.length; i++) {
+  if (property.offer.features) {
+    for (let i = 0; i < property.offer.features.length; i++) {
       const featuresListItem = document.createElement('li');
       featuresListItem.classList.add('popup__feature');
-      featuresListItem.classList.add(`popup__feature--${property.features[i]}`);
+      featuresListItem.classList.add(`popup__feature--${property.offer.features[i]}`);
       featuresPopup.append(featuresListItem);
     }
   } else {
@@ -99,11 +99,11 @@ function createPopup (property) {
   const photosPopup = clonePopup.querySelector('.popup__photos');
   photosPopup.innerHTML = '';
 
-  if (property.photos) {
-    for (let j = 0; j < property.photos.length; j++) {
+  if (property.offer.photos) {
+    for (let i = 0; i < property.offer.photos.length; i++) {
       const photosListItem = document.createElement('img');
       photosListItem.classList.add('popup__photo');
-      photosListItem.src = property.photos[j];
+      photosListItem.src = property.offer.photos[i];
       photosListItem.width = 45;
       photosListItem.height = 40;
       photosListItem.alt = 'Фотография жилья';
