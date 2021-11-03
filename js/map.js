@@ -1,6 +1,6 @@
 import { switchActiveForm } from './switch-active-form.js';
 import { createPopup } from './popup.js';
-import { createProperty } from './create-property.js';
+import { createLoader } from './server-data.js';
 
 const form = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -56,18 +56,24 @@ const pinMarkerIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
-createProperty.forEach((property) => {
-  const pinMarker = L.marker(
-    {
-      lat: property.adress.lat,
-      lng: property.adress.lnt,
-    },
-    {
-      icon: pinMarkerIcon,
-    },
-  );
+const drawProperty = (object) => {
+  object.forEach((property) => {
+    const pinMarker = L.marker(
+      {
+        lat: property.location.lat,
+        lng: property.location.lng,
+      },
+      {
+        icon: pinMarkerIcon,
+      },
+    );
 
-  pinMarker
-    .addTo(map)
-    .bindPopup(createPopup(property));
-});
+    pinMarker
+      .addTo(map)
+      .bindPopup(createPopup(property));
+  });
+};
+
+const loader = createLoader(drawProperty, alert);
+
+loader();
