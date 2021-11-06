@@ -1,5 +1,8 @@
-const createLoader = (onSuccess, onError) => () => {
-  return fetch(
+import { showSuccess, showError } from './util.js';
+import { resetForm } from './validation-form.js';
+
+const getData = (onSuccess, onError) => () =>
+  fetch(
     'https://24.javascript.pages.academy/keksobooking/data',
     {
       method: 'GET',
@@ -19,6 +22,27 @@ const createLoader = (onSuccess, onError) => () => {
     .catch((err) => {
       onError(err);
     });
+
+const postData = (body) => {
+  fetch(
+    'https://24.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        resetForm();
+        showSuccess();
+
+      } else {
+        showError();
+      }
+    })
+    .catch(() => {
+      showError();
+    });
 };
 
-export { createLoader };
+export { getData, postData };
