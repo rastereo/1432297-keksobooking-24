@@ -641,6 +641,11 @@ fieldset {
           box-shadow: 0 0 2px 2px #ff6547;
 }
 
+.ad-form_invalid input:invalid {
+  border-color: red;
+  color: red;
+}
+
 
 /* Футер
    ========================================================================== */

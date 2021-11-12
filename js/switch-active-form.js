@@ -1,4 +1,4 @@
-function switchActiveForm (object, active) {
+const turnActiveForm = (object, active) => {
   if (active) {
     object.classList.remove('ad-form--disabled');
   } else {
@@ -8,6 +8,6 @@ function switchActiveForm (object, active) {
   for (let i = 0; i < object.children.length; i++) {
     object.children[i].disabled = !active;
   }
-}
+};
 
-export { switchActiveForm };
+export { turnActiveForm };

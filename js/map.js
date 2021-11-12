@@ -1,4 +1,4 @@
-import { switchActiveForm } from './switch-active-form.js';
+import { turnActiveForm } from './switch-active-form.js';
 import { createPopup } from './popup.js';
 import { getData } from './server-data.js';
 import { showAlert } from './util.js';
@@ -17,8 +17,8 @@ const housingGuests = mapFilters.querySelector('#housing-guests');
 const housingFeatures = mapFilters.querySelector('#housing-features');
 
 const MapHousingPrice = {
-  low: 10000,
-  high: 50000,
+  LOW: 10000,
+  HIGH: 50000,
 };
 
 const MapDefault = {
@@ -27,13 +27,12 @@ const MapDefault = {
   ZOOM: 13,
 };
 
-switchActiveForm(form);
-switchActiveForm(mapFilters);
+turnActiveForm(form);
+turnActiveForm(mapFilters);
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    switchActiveForm(form, true);
-    switchActiveForm(mapFilters, true);
+    turnActiveForm(form, true);
   })
   .setView({
     lat: MapDefault.LAT,
@@ -66,12 +65,12 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-const showAddressMarker = function () {
+const showAddressMarker = () => {
   const addressInput = document.querySelector('#address');
   addressInput.value = `${mainPinMarker._latlng.lat}, ${mainPinMarker._latlng.lng}`;
 
   mainPinMarker.on('moveend', (evt) => {
-    addressInput.value = `${evt.target.getLatLng().lat}, ${evt.target.getLatLng().lng}`;
+    addressInput.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
   });
 };
 
@@ -84,9 +83,8 @@ const pinMarkerIcon = L.icon({
 });
 
 const compareHousingType = (property) => {
-  const selectedHousingType = housingType.options[housingType.selectedIndex].value;
-
-  if (selectedHousingType === property.offer.type || selectedHousingType === ANY_FILTERS) {
+  const selectedHousingType = housingType.options[housingType.selectedIndex];
+  if (selectedHousingType.value === property.offer.type || selectedHousingType.value === ANY_FILTERS) {
     return true;
   }
 
@@ -96,15 +94,15 @@ const compareHousingType = (property) => {
 const compareHousingPrice = (property) => {
   const selectedHousingPrice = housingPrice.options[housingPrice.selectedIndex].value;
 
-  if (selectedHousingPrice === 'middle' && property.offer.price >= MapHousingPrice.low && property.offer.price <= MapHousingPrice.high) {
+  if (selectedHousingPrice === 'middle' && property.offer.price >= MapHousingPrice.LOW && property.offer.price <= MapHousingPrice.HIGH) {
     return true;
   }
 
-  if (selectedHousingPrice === 'low' && property.offer.price < MapHousingPrice.low) {
+  if (selectedHousingPrice === 'low' && property.offer.price < MapHousingPrice.LOW) {
     return true;
   }
 
-  if (selectedHousingPrice === 'high' && property.offer.price > MapHousingPrice.high) {
+  if (selectedHousingPrice === 'high' && property.offer.price > MapHousingPrice.HIGH) {
     return true;
   }
 
@@ -134,6 +132,7 @@ const compareHousingGuests = (property) => {
 
   return false;
 };
+
 
 const compareHousingFeaturies = (property) => {
   const featureCheckeds = housingFeatures.querySelectorAll('.map__checkbox:checked');
@@ -187,7 +186,12 @@ const drawProperty = (data) => {
         .addTo(markerGroup)
         .bindPopup(createPopup(property));
     });
+
+  if (data) {
+    turnActiveForm(mapFilters, true);
+  }
 };
+
 
 const showData = (data) => {
   drawProperty(data);
@@ -199,6 +203,21 @@ const showData = (data) => {
   });
 };
 
+const resetMapForm = () => {
+  const featureCheckedsReset = housingFeatures.querySelectorAll('.map__checkbox:checked');
+
+  housingType.selectedIndex = ANY_FILTERS;
+  housingPrice.selectedIndex = ANY_FILTERS;
+  housingRooms.selectedIndex = ANY_FILTERS;
+  housingGuests.selectedIndex = ANY_FILTERS;
+
+  for (let i = 0; i < featureCheckedsReset.length; i++) {
+    featureCheckedsReset[i].checked = false;
+  }
+
+  getData(showData, showAlert);
+};
+
 getData(showData, showAlert);
 
-export { map, mainPinMarker, MapDefault, showAddressMarker };
+export { map, mainPinMarker, MapDefault, showAddressMarker, resetMapForm };

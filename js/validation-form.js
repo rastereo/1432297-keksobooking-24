@@ -1,6 +1,7 @@
 import { postData } from './server-data.js';
-import { map, MapDefault, mainPinMarker, showAddressMarker } from './map.js';
+import { map, MapDefault, mainPinMarker, showAddressMarker, resetMapForm } from './map.js';
 import { showSuccess, showError } from './util.js';
+import { resetUpload } from './upload-files.js';
 
 const RADIX = 10;
 
@@ -12,10 +13,20 @@ const capacity = form.querySelector('#capacity');
 const type = form.querySelector('#type');
 const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
+const submitButton = form.querySelector('.ad-form__submit');
+const resetButton = form.querySelector('.ad-form__reset');
 
-function onValidata(evt) {
+const MapMinimalPrice = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
+const onValidata = (evt) => {
   evt.target.reportValidity();
-}
+};
 
 titleInput.addEventListener('input', onValidata);
 priceInput.addEventListener('input', onValidata);
@@ -41,19 +52,11 @@ const roomValidate = (evt) => {
 roomNumbers.addEventListener('change', roomValidate);
 capacity.addEventListener('change', roomValidate);
 
-const minimalPrice = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
-
-const activeMinimalPrice = function () {
+const activeMinimalPrice = () => {
   const selectedType = type.options[type.selectedIndex].value;
 
-  priceInput.min = minimalPrice[selectedType];
-  priceInput.placeholder = minimalPrice[selectedType];
+  priceInput.min = MapMinimalPrice[selectedType];
+  priceInput.placeholder = MapMinimalPrice[selectedType];
 };
 
 type.addEventListener('change', () => {
@@ -78,7 +81,7 @@ timeOut.addEventListener('change', () => {
   timeIn.selectedIndex = findTimeIn;
 });
 
-const resetForm = function () {
+const resetForm = () => {
   form.reset();
   map.closePopup();
   activeMinimalPrice();
@@ -95,24 +98,35 @@ const resetForm = function () {
   showAddressMarker();
 };
 
+submitButton.addEventListener('click', (evt) => {
+  const targetClick = evt.target;
+  const formTarget = targetClick.closest('.ad-form');
+  formTarget.classList.add('ad-form_invalid');
+});
+
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
+
+  const targetSubmit = evt.target;
+  targetSubmit.classList.remove('ad-form_invalid');
+
   postData(
     () => {
-      resetForm();
       showSuccess();
+      resetForm();
+      resetMapForm();
+      resetUpload();
     },
     () => showError(),
     new FormData(evt.target),
   );
 });
 
-
-const resetButton = form.querySelector('.ad-form__reset');
-
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm();
+  resetMapForm();
+  resetUpload();
 });
 
 export { form, activeMinimalPrice, resetForm };
