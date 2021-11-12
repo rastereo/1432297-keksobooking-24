@@ -1,7 +1,4 @@
-import { showSuccess, showError } from './util.js';
-import { resetForm } from './validation-form.js';
-
-const getData = (onSuccess, onError) => () =>
+const getData = (onSuccess, onError) =>  {
   fetch(
     'https://24.javascript.pages.academy/keksobooking/data',
     {
@@ -22,8 +19,9 @@ const getData = (onSuccess, onError) => () =>
     .catch((err) => {
       onError(err);
     });
+};
 
-const postData = (body) => {
+const postData = (onSuccess, onFail, body) => {
   fetch(
     'https://24.javascript.pages.academy/keksobooking',
     {
@@ -33,15 +31,13 @@ const postData = (body) => {
   )
     .then((response) => {
       if (response.ok) {
-        resetForm();
-        showSuccess();
-
+        onSuccess();
       } else {
-        showError();
+        onFail();
       }
     })
     .catch(() => {
-      showError();
+      onFail();
     });
 };
 

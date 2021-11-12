@@ -1,5 +1,8 @@
 import { postData } from './server-data.js';
 import { map, MapDefault, mainPinMarker, showAddressMarker } from './map.js';
+import { showSuccess, showError } from './util.js';
+
+const RADIX = 10;
 
 const form = document.querySelector('.ad-form');
 const titleInput = form.querySelector('#title');
@@ -9,8 +12,6 @@ const capacity = form.querySelector('#capacity');
 const type = form.querySelector('#type');
 const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
-
-const RADIX = 10;
 
 function onValidata(evt) {
   evt.target.reportValidity();
@@ -77,11 +78,6 @@ timeOut.addEventListener('change', () => {
   timeIn.selectedIndex = findTimeIn;
 });
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  postData(new FormData(evt.target));
-});
-
 const resetForm = function () {
   form.reset();
   map.closePopup();
@@ -98,6 +94,19 @@ const resetForm = function () {
 
   showAddressMarker();
 };
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  postData(
+    () => {
+      resetForm();
+      showSuccess();
+    },
+    () => showError(),
+    new FormData(evt.target),
+  );
+});
+
 
 const resetButton = form.querySelector('.ad-form__reset');
 
