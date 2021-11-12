@@ -205,11 +205,11 @@ const showData = (data) => {
 
 const resetMapForm = () => {
   const featureCheckedsReset = housingFeatures.querySelectorAll('.map__checkbox:checked');
+  const mapFilterSelects = mapFilters.querySelectorAll('.map__filter');
 
-  housingType.selectedIndex = ANY_FILTERS;
-  housingPrice.selectedIndex = ANY_FILTERS;
-  housingRooms.selectedIndex = ANY_FILTERS;
-  housingGuests.selectedIndex = ANY_FILTERS;
+  for (let i = 0; i < mapFilterSelects.length; i++) {
+    mapFilterSelects[i].selectedIndex = ANY_FILTERS;
+  }
 
   for (let i = 0; i < featureCheckedsReset.length; i++) {
     featureCheckedsReset[i].checked = false;
