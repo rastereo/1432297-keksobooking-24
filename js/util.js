@@ -21,12 +21,12 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-function showSuccess () {
+const showSuccess = () => {
   const blankSuccess = document.querySelector('#success').content;
   const cloneSuccess = blankSuccess.querySelector('.success').cloneNode(true);
   document.body.appendChild(cloneSuccess);
 
-  document.onclick = function () {
+  document.onclick = () => {
     cloneSuccess.remove();
   };
 
@@ -35,20 +35,20 @@ function showSuccess () {
       cloneSuccess.remove();
     }
   });
-}
+};
 
-function showError () {
+const showError = () => {
   const blankError = document.querySelector('#error').content;
   const cloneError = blankError.querySelector('.error').cloneNode(true);
   document.body.appendChild(cloneError);
 
   const errorButton = cloneError.querySelector('.error__button');
 
-  document.onclick = function () {
+  document.onclick = () => {
     cloneError.remove();
   };
 
-  errorButton.onclick = function () {
+  errorButton.onclick = () => {
     cloneError.remove();
   };
 
@@ -57,6 +57,6 @@ function showError () {
       cloneError.remove();
     }
   });
-}
+};
 
 export { showAlert, showSuccess, showError };
