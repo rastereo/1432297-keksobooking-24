@@ -24,6 +24,11 @@ const MapMinimalPrice = {
   palace: 10000,
 };
 
+const MapCapacityRooms = {
+  MIN: 0,
+  MAX: 100,
+};
+
 const onValidata = (evt) => {
   evt.target.reportValidity();
 };
@@ -41,7 +46,7 @@ const roomValidate = (evt) => {
   roomNumbers.setCustomValidity('');
   capacity.setCustomValidity('');
 
-  if (capacityValue > roomValue || capacityValue === 0 && roomValue !== 100 || capacityValue !== 0 && roomValue === 100) {
+  if (capacityValue > roomValue || capacityValue === MapCapacityRooms.MIN && roomValue !== MapCapacityRooms.MAX || capacityValue !== MapCapacityRooms.MIN && roomValue === MapCapacityRooms.MAX) {
     errorMessage = 'Слишком много гостей для такого количества комнат';
   }
 
