@@ -28,8 +28,8 @@ photoChooser.addEventListener('change', () => {
 
   if (checkPhotoType) {
     const addPhoto = document.createElement('img');
-    addPhoto.width = 70;
-    addPhoto.height = 70;
+    addPhoto.width = '70';
+    addPhoto.height = '70';
     addPhoto.alt = 'Фотография жилья';
     addPhoto.src = URL.createObjectURL(photoFile);
     photoPreview.append(addPhoto);

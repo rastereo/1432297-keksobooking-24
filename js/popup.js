@@ -1,4 +1,4 @@
-function createPopup (property) {
+const createPopup = (property) => {
   const blankPopup = document.querySelector('#card').content;
   const clonePopup = blankPopup.querySelector('.popup').cloneNode(true);
 
@@ -107,6 +107,6 @@ function createPopup (property) {
   }
 
   return clonePopup;
-}
+};
 
 export { createPopup };
